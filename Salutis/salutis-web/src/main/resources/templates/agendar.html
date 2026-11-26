@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Agendar Consulta')}"></head>
+<body class="bg-light">
+<nav th:replace="~{layout :: nav}"></nav>
+<main class="container" style="max-width:760px">
+<h2 class="mb-3" style="color:#0B5394">Agendar Consulta</h2>
+<div th:replace="~{layout :: avisos}"></div>
+<form method="get" class="card card-body shadow-sm mb-3" id="f">
+  <label class="form-label">Especialidade</label>
+  <select class="form-select mb-3" name="esp" onchange="document.getElementById('f').submit()">
+    <option th:each="e : ${esps}" th:value="${e}" th:text="${e}" th:selected="${e == esp}"></option></select>
+  <label class="form-label">Médico</label>
+  <select class="form-select mb-3" name="medico" onchange="document.getElementById('f').submit()">
+    <option th:each="m : ${meds}" th:value="${m.id}" th:text="${m.nome}" th:selected="${m.id == medico}"></option></select>
+  <label class="form-label">Data</label>
+  <input class="form-control" type="date" name="data" th:value="${data}" th:min="${hoje}" onchange="document.getElementById('f').submit()">
+</form>
+<form method="post" class="card card-body shadow-sm" th:if="${data != null}">
+  <input type="hidden" name="medico" th:value="${medico}"><input type="hidden" name="data" th:value="${data}">
+  <label class="form-label">Horários livres</label>
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <th:block th:each="h, i : ${horas}">
+      <input type="radio" class="btn-check" name="hora" th:id="${'h' + i.index}" th:value="${h}" required>
+      <label class="btn btn-outline-primary" th:for="${'h' + i.index}" th:text="${h}"></label>
+    </th:block>
+    <span class="text-muted" th:if="${#lists.isEmpty(horas)}">Sem horários livres.</span>
+  </div>
+  <button class="btn btn-success" th:disabled="${#lists.isEmpty(horas)}">Confirmar consulta</button>
+</form>
+</main>
+<script th:replace="~{layout :: js}"></script>
+</body></html>

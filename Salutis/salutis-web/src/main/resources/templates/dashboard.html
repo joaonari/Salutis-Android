@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Painel')}"></head>
+<body class="bg-light">
+<nav th:replace="~{layout :: nav}"></nav>
+<main class="container" style="max-width:760px">
+<h2 class="mb-3" style="color:#0B5394">Painel</h2>
+<div th:replace="~{layout :: avisos}"></div>
+<p class="lead">Olá, <b th:text="${session.nome}"></b>!</p>
+<div class="row g-3">
+  <div class="col-md-4"><a class="btn btn-primary w-100 py-4" href="/agendar">Agendar Consulta</a></div>
+  <div class="col-md-4"><a class="btn btn-primary w-100 py-4" href="/consultas">Minhas Consultas</a></div>
+  <div class="col-md-4"><a class="btn btn-primary w-100 py-4" href="/historico">Histórico Médico</a></div>
+</div>
+</main>
+<script th:replace="~{layout :: js}"></script>
+</body></html>

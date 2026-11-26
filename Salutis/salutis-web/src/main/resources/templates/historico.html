@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Histórico Médico')}"></head>
+<body class="bg-light">
+<nav th:replace="~{layout :: nav}"></nav>
+<main class="container" style="max-width:760px">
+<h2 class="mb-3" style="color:#0B5394">Histórico Médico</h2>
+<div th:replace="~{layout :: avisos}"></div>
+<p class="text-muted" th:if="${#lists.isEmpty(lista)}">Nenhum registro.</p>
+<div class="card shadow-sm mb-3" th:each="r : ${lista}"><div class="card-body">
+  <h6 th:text="${#temporals.format(r.data, 'dd/MM/yyyy') + ' – ' + r.medico}"></h6>
+  <p class="mb-0" th:text="${r.resumo}"></p></div></div>
+</main>
+<script th:replace="~{layout :: js}"></script>
+</body></html>

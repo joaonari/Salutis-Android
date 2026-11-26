@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Minhas Consultas')}"></head>
+<body class="bg-light">
+<nav th:replace="~{layout :: nav}"></nav>
+<main class="container" style="max-width:760px">
+<h2 class="mb-3" style="color:#0B5394">Minhas Consultas</h2>
+<div th:replace="~{layout :: avisos}"></div>
+<p class="text-muted" th:if="${#lists.isEmpty(lista)}">Nenhuma consulta agendada.</p>
+<div class="card shadow-sm mb-3" th:each="c : ${lista}">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h5 class="card-title" th:text="${c.medico.nome + ' – ' + c.medico.especialidade}"></h5>
+      <span class="badge" th:classappend="${c.status == 'Confirmada' ? 'bg-success' : 'bg-secondary'}" th:text="${c.status}"></span>
+    </div>
+    <p class="mb-1" th:text="${#temporals.format(c.data, 'dd/MM/yyyy') + ' às ' + c.hora}"></p>
+    <p class="mb-1 text-muted" th:if="${c.motivo != null}" th:text="${'Motivo: ' + c.motivo}"></p>
+    <div class="mt-2" th:if="${c.status == 'Confirmada'}">
+      <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" th:data-bs-target="${'#r' + c.id}">Remarcar</button>
+      <button class="btn btn-sm btn-outline-danger" data-bs-toggle="collapse" th:data-bs-target="${'#x' + c.id}">Cancelar</button>
+      <form method="post" th:action="@{/consultas/{id}/remarcar(id=${c.id})}" class="collapse mt-2" th:id="${'r' + c.id}">
+        <input class="form-control mb-2" type="date" name="data" required>
+        <select class="form-select mb-2" name="hora"><option th:each="h : ${horas}" th:value="${h}" th:text="${h}"></option></select>
+        <input class="form-control mb-2" name="motivo" placeholder="Motivo da remarcação" required>
+        <button class="btn btn-primary btn-sm">Remarcar</button>
+      </form>
+      <form method="post" th:action="@{/consultas/{id}/cancelar(id=${c.id})}" class="collapse mt-2" th:id="${'x' + c.id}">
+        <input class="form-control mb-2" name="motivo" placeholder="Motivo do cancelamento" required>
+        <button class="btn btn-danger btn-sm">Confirmar cancelamento</button>
+      </form>
+    </div>
+  </div>
+</div>
+</main>
+<script th:replace="~{layout :: js}"></script>
+</body></html>

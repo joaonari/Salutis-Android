@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Criar Conta')}"></head>
+<body class="bg-light">
+<main class="container py-5" style="max-width:420px">
+<h2 class="text-center mb-4" style="color:#0B5394">Criar Conta</h2>
+<div th:replace="~{layout :: avisos}"></div>
+<form method="post" class="card card-body shadow-sm">
+<input class="form-control mb-3" name="nome" placeholder="Nome completo" required>
+<input class="form-control mb-3" name="email" type="email" placeholder="E-mail" required>
+<input class="form-control mb-3" name="cpf" placeholder="CPF" maxlength="14" required>
+<input class="form-control mb-3" name="senha" type="password" placeholder="Senha (8+, letra e número)" required>
+<input class="form-control mb-3" name="senha2" type="password" placeholder="Confirmar senha" required>
+<button class="btn btn-primary w-100 mb-2">Cadastrar</button>
+<a class="btn btn-outline-secondary w-100" href="/login">Voltar</a>
+</form>
+</main>
+</body></html>
